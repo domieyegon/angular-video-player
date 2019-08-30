@@ -9,7 +9,7 @@ export class VideoPlayerService {
   constructor(private http: Http) { }
 
   getVideoList() {
-    const url = 'http://localhost:8181/api/videoList';
+    const url = 'http://localhost:8181/api/videos';
 
     const headers = new Headers({
       'content-type': 'application/json'

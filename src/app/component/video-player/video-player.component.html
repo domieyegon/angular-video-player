@@ -4,7 +4,7 @@
     <hr>
 </div>
 <div class="row">
-    <div class="col-md-9" >
+    <div class="col-md-9">
         <video controls width="100%"></video>
     </div>
     <div class="col-md-3">
@@ -13,10 +13,17 @@
                 <h3>Playlist</h3>
             </div>
             <div class="card-body">
+                <!-- <p  (click)="playVideo(video.id)" class="playlist-item" *ngFor="let video of videoList">
+                    {{video.videoOriginalName}}
+                </p>
+
+                <p *ngIf=""  (click)="playVideo(video.id)" class="playlist-item" *ngFor="let video of videoList">
+                        {{video.videoOriginalName}}
+                    </p> -->
                 <table class="table">
                     <tbody>
                         <tr (click)="playVideo(video.id)" class="playlist-item" *ngFor="let video of videoList">
-                            <td>{{video.videoName}}</td>
+                            <td>{{video.videoOriginalName}}</td>
                         </tr>
                     </tbody>
                 </table>

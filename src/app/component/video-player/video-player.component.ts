@@ -14,6 +14,8 @@ export class VideoPlayerComponent implements OnInit {
   public videoList: Video[];
   public video: Video = new Video();
 
+  public currentUrl = "http://localhost:8181/api/file/bbdddde5-57a2-479a-b138-f48019719698/Manifest.mpd";
+
   constructor(private videoPlayerService: VideoPlayerService) { }
 
   videoPlayer() {
@@ -33,7 +35,7 @@ export class VideoPlayerComponent implements OnInit {
     // play the video file
     player.loadVideo({
       // url: "http://localhost:8181/video/video-manifest.xml",
-      url: "http://localhost:8181/api/file/Manifest.mpd",
+      url: this.currentUrl,
       transport: "dash",
       // url : videoUrl,
       // transport: "directfile", //Transport protocol can be "dash","smooth" or "directfile" 
@@ -53,7 +55,12 @@ export class VideoPlayerComponent implements OnInit {
   playVideo(id) {
     this.videoList.forEach(video => {
       if (video.id === id) {
-        // this.videoPlayer(video.videoUrl);
+        this.currentUrl = "http://localhost:8181/api/file/" + video.folder + "/Manifest.mpd";
+
+        console.log("currentUrl");
+        console.log(this.currentUrl);
+
+        this.videoPlayer();
 
       }
     })
@@ -81,6 +88,10 @@ export class VideoPlayerComponent implements OnInit {
     this.videoPlayerService.getVideoList().subscribe(
       res => {
         this.videoList = res.json();
+
+        console.log("videoList");
+        console.log(this.videoList);
+
         // this.videoPlayer(this.videoList[2].videoUrl);
       },
       err => {
@@ -91,7 +102,7 @@ export class VideoPlayerComponent implements OnInit {
 
   ngOnInit() {
     this.videoPlayer();
-    // this.getVideoList();
+    this.getVideoList();
 
   }
 
