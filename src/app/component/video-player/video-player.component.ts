@@ -16,7 +16,7 @@ export class VideoPlayerComponent implements OnInit {
 
   constructor(private videoPlayerService: VideoPlayerService) { }
 
-  videoPlayer(videoUrl) {
+  videoPlayer() {
     // Video player instanciation
     const videoElement = document.querySelector('video');
     const player = new RxPlayer({ videoElement });
@@ -26,21 +26,21 @@ export class VideoPlayerComponent implements OnInit {
 
       //check if the state of the current video is ended.
       if (state === "ENDED") {
-        this.playNextVideo(videoUrl);
+        // this.playNextVideo();
       }
     });
 
     // play the video file
     player.loadVideo({
       // url: "http://localhost:8181/video/video-manifest.xml",
-      url: "http://localhost/output/Manifest.mpd",
+      url: "http://localhost:8181/api/file/Manifest.mpd",
       transport: "dash",
       // url : videoUrl,
       // transport: "directfile", //Transport protocol can be "dash","smooth" or "directfile" 
       autoPlay: true,
-      startAt:  {
-        fromLastPosition: -30
-      }
+      // startAt:  {
+      //   fromLastPosition: -30
+      // }
     });
 
     // check if error occured while loading the video file
@@ -53,7 +53,7 @@ export class VideoPlayerComponent implements OnInit {
   playVideo(id) {
     this.videoList.forEach(video => {
       if (video.id === id) {
-        this.videoPlayer(video.videoUrl);
+        // this.videoPlayer(video.videoUrl);
 
       }
     })
@@ -73,7 +73,7 @@ export class VideoPlayerComponent implements OnInit {
       console.log("index of the next video is :" + index + 1);
       nextVideoIndex = index + 1;
     }
-    this.videoPlayer(this.videoList[nextVideoIndex].videoUrl);
+    // this.videoPlayer(this.videoList[nextVideoIndex].videoUrl);
   }
 
   // requaest for videos from the backend
@@ -81,7 +81,7 @@ export class VideoPlayerComponent implements OnInit {
     this.videoPlayerService.getVideoList().subscribe(
       res => {
         this.videoList = res.json();
-        this.videoPlayer(this.videoList[2].videoUrl);
+        // this.videoPlayer(this.videoList[2].videoUrl);
       },
       err => {
         console.log(err);
@@ -90,8 +90,8 @@ export class VideoPlayerComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.videoPlayer();
-    this.getVideoList();
+    this.videoPlayer();
+    // this.getVideoList();
 
   }
 
