@@ -2,7 +2,25 @@
     <hr>
     <h1>The Streamer</h1>
     <hr>
-    <div class="col-md-9">
+</div>
+<div class="row">
+    <div class="col-md-9" >
         <video controls width="100%"></video>
+    </div>
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-header">
+                <h3>Playlist</h3>
+            </div>
+            <div class="card-body">
+                <table class="table">
+                    <tbody>
+                        <tr (click)="playVideo(video.id)" class="playlist-item" *ngFor="let video of videoList">
+                            <td>{{video.videoName}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>

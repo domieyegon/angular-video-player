@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import RxPlayer from 'rx-player';
 import { VideoPlayerService } from 'src/app/service/video-player.service';
 import { Video } from 'src/app/model/video';
+import Player from 'rx-player/dist/_esm5.processed';
 
 @Component({
   selector: 'app-video-player',
@@ -12,22 +13,34 @@ import { Video } from 'src/app/model/video';
 export class VideoPlayerComponent implements OnInit {
 
   public videoList: Video[];
+  public video: Video = new Video();
 
   constructor(private videoPlayerService: VideoPlayerService) { }
 
   videoPlayer(videoUrl) {
-    // Video play instanciation
+    // Video player instanciation
     const videoElement = document.querySelector('video');
     const player = new RxPlayer({videoElement});
+
     // play the video file
     player.loadVideo({
+      // url: "http://localhost:8181/video/video-manifest.xml",
+      // url: "http://vm2.dashif.org/livesim-dev/segtimeline_1/testpic_6s/Manifest.mpd",
+      // transport: "dash",
       url : videoUrl,
-      transport: "directfile",
+      transport: "directfile", //Transport protocol can be "dash","smooth" or "directfile" 
       autoPlay: true
     });
 
     // check if the video loaded successfully
     player.addEventListener("playerStateChange", (state) => {
+
+      //check if the state of the current video is ended.
+      if(state==="ENDED") {
+        player.dispose();
+        this.playNextVideo(videoUrl);
+      }
+
       if (state === "LOADED") {
         console.log("the content is loaded");
 
@@ -59,10 +72,8 @@ export class VideoPlayerComponent implements OnInit {
   getVideoList() {
     this.videoPlayerService.getVideoList().subscribe(
       res => {
-        console.log(res);
         this.videoList = res.json();
-        // console.log(this.videoList[1].videoUrl);
-        this.videoPlayer(this.videoList[1].videoUrl);
+        this.videoPlayer(this.videoList[2].videoUrl);
       },
       err => {
         console.log(err);
@@ -70,8 +81,35 @@ export class VideoPlayerComponent implements OnInit {
     );
   }
 
-  ngOnInit() {
+   // play a video from the playlist on click
+   playVideo(id) {
+    this.videoList.forEach(video => {
+      if (video.id === id) {
+        this.videoPlayer(video.videoUrl);
+        
+      }
+    })
+  
+  }
 
+  // play the next video when the current end
+  playNextVideo(url) {
+    let index = this.videoList.findIndex(vid => vid.videoUrl === url);
+      let nextVideoIndex = 0;
+      console.log("index of the current video :"+index);
+      console.log("length of the array :"+this.videoList.length);
+      if ((index + 1) >= this.videoList.length) {
+        nextVideoIndex = 0
+        console.log("index of the current video :"+ 0)
+      } else {
+        console.log("index of the next video is :"+index+1);
+        nextVideoIndex = index + 1;
+      }
+      this.videoPlayer(this.videoList[nextVideoIndex].videoUrl);
+  }
+
+  ngOnInit() {
+    // this.videoPlayer();
     this.getVideoList();
 
   }
