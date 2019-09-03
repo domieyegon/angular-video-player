@@ -12,10 +12,9 @@ export class UploadVideoComponent implements OnInit {
 
   public uploadVideo:Video = new Video();
   public videoUploadedSuccess:boolean;
-  form:FormGroup
   selectedFile: FileList;
   currentFileUpload: File;
-  progress: { percentage: number } = { percentage: 0 };
+  // progress: { percentage: number } = { percentage: 0 };
 
   constructor(private uploadVideoService: UploadVideoService) { }
 
@@ -24,7 +23,7 @@ export class UploadVideoComponent implements OnInit {
   }
 
   uploadFile() {
-    this.progress.percentage = 0;
+    // this.progress.percentage = 0;
     this.currentFileUpload = this.selectedFile.item(0);
 
     this.uploadVideoService.uploadFile(this.currentFileUpload).subscribe(

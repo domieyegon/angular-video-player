@@ -18,7 +18,7 @@ const appRoutes: Routes = [
     },
 
     {
-        path: '/upload',
+        path: 'upload',
         component: UploadVideoComponent
     }
 
