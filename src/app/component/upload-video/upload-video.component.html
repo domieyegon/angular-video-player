@@ -1,0 +1,35 @@
+<div class="col-md-12">
+        <hr>
+        <div class="row">
+            <div class="col-md-9">
+                <h1 class="text-primary">The Streamer</h1>
+            </div>
+            <div class="col-md-3 text-right">
+                <a class="btn btn-primary" href="/">Home</a>
+            </div>
+        </div>
+        <hr>
+    </div>
+<div class="row offset-md-3">
+    <div class="col-md-12 p-0">
+        <div class="min-vh-100 text-center m-0 d-flex flex-column justify-content-center">
+            <div class="col-md-8">
+                <h1 class="display-4">Upload Videos</h1>
+                <hr>
+                <form (ngSubmit)="uploadFile()">
+                    <div class="row">
+                        <div class="form-group col-md-9">
+                            <input type="file" (change)="onFileChange($event)" accept=".mp4,.flv,.m4a,.mkv,.webm" class="" id="uploadfile" name="file">
+                        </div>
+                        <div class="col-md-3">
+                            <button type="submit" class="btn btn-primary" [disabled]="!selectedFile">Submit</button>
+                        </div>
+                    </div>
+                </form>
+                <div class="form-group bg-success">
+                    <p *ngIf="videoUploadedSuccess">Video Uploaded Successfully!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
