@@ -14,35 +14,30 @@ export class VideoPlayerComponent implements OnInit {
   public videoList: Video[];
   public video: Video = new Video();
 
-  public currentUrl = "http://localhost:8181/api/file/bbdddde5-57a2-479a-b138-f48019719698/Manifest.mpd";
-
   constructor(private videoPlayerService: VideoPlayerService) { }
 
-  videoPlayer() {
+  videoPlayer(videoUrl) {
     // Video player instanciation
     const videoElement = document.querySelector('video');
     const player = new RxPlayer({ videoElement });
+
+    const getVideoToPlay = {
+      url: videoUrl,
+        transport: "dash", //Transport protocol can be "dash","smooth" or "directfile" 
+        autoPlay: true
+    }
+
+    // play the video file
+    player.loadVideo(getVideoToPlay);
+
 
     // check if the video loaded successfully
     player.addEventListener("playerStateChange", (state) => {
 
       //check if the state of the current video is ended.
       if (state === "ENDED") {
-        // this.playNextVideo();
+        this.playNextVideo(videoUrl);
       }
-    });
-
-    // play the video file
-    player.loadVideo({
-      // url: "http://localhost:8181/video/video-manifest.xml",
-      url: this.currentUrl,
-      transport: "dash",
-      // url : videoUrl,
-      // transport: "directfile", //Transport protocol can be "dash","smooth" or "directfile" 
-      autoPlay: true,
-      // startAt:  {
-      //   fromLastPosition: -30
-      // }
     });
 
     // check if error occured while loading the video file
@@ -55,12 +50,7 @@ export class VideoPlayerComponent implements OnInit {
   playVideo(id) {
     this.videoList.forEach(video => {
       if (video.id === id) {
-        this.currentUrl = "http://localhost:8181/api/file/" + video.folder + "/Manifest.mpd";
-
-        console.log("currentUrl");
-        console.log(this.currentUrl);
-
-        this.videoPlayer();
+        this.videoPlayer(video.videoUrl);
 
       }
     })
@@ -88,11 +78,7 @@ export class VideoPlayerComponent implements OnInit {
     this.videoPlayerService.getVideoList().subscribe(
       res => {
         this.videoList = res.json();
-
-        console.log("videoList");
-        console.log(this.videoList);
-
-        // this.videoPlayer(this.videoList[2].videoUrl);
+        this.videoPlayer(this.videoList[0].videoUrl);
       },
       err => {
         console.log(err);
@@ -101,7 +87,7 @@ export class VideoPlayerComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.videoPlayer();
+    // this.videoPlayer();
     this.getVideoList();
 
   }
