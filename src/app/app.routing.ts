@@ -1,6 +1,7 @@
 import { Routes, RouterModule } from "@angular/router";
 import { ModuleWithProviders } from '@angular/core';
 import { VideoPlayerComponent } from './component/video-player/video-player.component';
+import { UploadVideoComponent } from './component/upload-video/upload-video.component';
 
 
 const appRoutes: Routes = [
@@ -14,6 +15,11 @@ const appRoutes: Routes = [
     {
         path: '',
         component: VideoPlayerComponent
+    },
+
+    {
+        path: '/upload',
+        component: UploadVideoComponent
     }
 
 ];

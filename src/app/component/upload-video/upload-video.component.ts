@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HttpResponse, HttpEventType } from '@angular/common/http';
 import { UploadVideoService } from 'src/app/service/upload-video.service';
 import { Video } from 'src/app/model/video';
 import { FormGroup, FormBuilder } from '@angular/forms';
@@ -18,7 +17,7 @@ export class UploadVideoComponent implements OnInit {
   currentFileUpload: File;
   progress: { percentage: number } = { percentage: 0 };
 
-  constructor(private formBuilder: FormBuilder,private uploadVideoService: UploadVideoService) { }
+  constructor(private uploadVideoService: UploadVideoService) { }
 
   onFileChange(event) {
     this.selectedFile = event.target.files;
@@ -27,12 +26,12 @@ export class UploadVideoComponent implements OnInit {
   uploadFile() {
     this.progress.percentage = 0;
     this.currentFileUpload = this.selectedFile.item(0);
+
     this.uploadVideoService.uploadFile(this.currentFileUpload).subscribe(
       res => {
-        if (event instanceof HttpResponse) {
+        console.log(res);
           console.log('File is completely uploaded!');
           this.videoUploadedSuccess = true;
-        }
       }
     );
   }

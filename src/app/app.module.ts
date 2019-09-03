@@ -6,17 +6,20 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { VideoPlayerComponent } from './component/video-player/video-player.component';
 import { routing } from './app.routing';
+import { UploadVideoComponent } from './component/upload-video/upload-video.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    VideoPlayerComponent
+    VideoPlayerComponent,
+    UploadVideoComponent
   ],
   imports: [
     HttpModule,
     BrowserModule,
     AppRoutingModule,
-    routing
+    routing,
+    UploadVideoComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
