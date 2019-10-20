@@ -14,6 +14,7 @@ export class VideoPlayerComponent implements OnInit {
   public videoList: Video[];
   public video: Video = new Video();
   public videoQualities = [];
+  private player;
 
 
   constructor(private videoPlayerService: VideoPlayerService) { }
@@ -21,7 +22,7 @@ export class VideoPlayerComponent implements OnInit {
   videoPlayer(videoUrl) {
     // Video player instanciation
     const videoElement = document.querySelector('video');
-    const player = new RxPlayer({ videoElement });
+    this.player = new RxPlayer({ videoElement });
 
     const getVideoToPlay = {
       url: videoUrl,
@@ -29,16 +30,16 @@ export class VideoPlayerComponent implements OnInit {
       autoPlay: false
     }
     // play the video file
-    player.loadVideo(getVideoToPlay);
+    this.player.loadVideo(getVideoToPlay);
 
     // check if the video loaded successfully
-    player.addEventListener("playerStateChange", (state) => {
+    this.player.addEventListener("playerStateChange", (state) => {
 
-      this.videoQualities = player.getAvailableVideoBitrates();
+      this.videoQualities = this.player.getAvailableVideoBitrates();
 
       // get the duration and convert the HH:MM:SS
-      const pos = player.getPosition();
-      const dur = player.getVideoDuration();
+      const pos = this.player.getPosition();
+      const dur = this.player.getVideoDuration();
       console.log(new Date(pos * 1000).toISOString().substr(11, 8));
       console.log(new Date(dur * 1000).toISOString().substr(11, 8));
       console.log(`current position: ${pos} / ${dur}`);
@@ -51,15 +52,14 @@ export class VideoPlayerComponent implements OnInit {
     });
 
     // check if error occured while loading the video file
-    player.addEventListener("error", (err) => {
+    this.player.addEventListener("error", (err) => {
       console.log("the content stopped with the following error", err);
     });
 
   }
 
   selectQuality(quality) {
-    console.log("selected quality is: " + quality);
-    // player.setVideoBitrate(quality)
+    this.player.setVideoBitrate(quality)
   }
 
   // play a video from the playlist on click
