@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import RxPlayer from 'rx-player';
 import { VideoPlayerService } from 'src/app/service/video-player.service';
 import { Video } from 'src/app/model/video';
+import { Params, ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-video-player',
@@ -15,17 +16,23 @@ export class VideoPlayerComponent implements OnInit {
   public video: Video = new Video();
   public videoQualities = [];
   private player;
+  private videoId: number;
+  private videoUrl
 
 
-  constructor(private videoPlayerService: VideoPlayerService) { }
+  constructor(
+    private videoPlayerService: VideoPlayerService,
+    private route: ActivatedRoute,
+    private router: Router
+  ) { }
 
-  videoPlayer(videoUrl) {
+  videoPlayer() {
     // Video player instanciation
     const videoElement = document.querySelector('video');
     this.player = new RxPlayer({ videoElement });
 
     const getVideoToPlay = {
-      url: videoUrl,
+      url: this.videoUrl,
       transport: "dash", //Transport protocol can be "dash","smooth" or "directfile" 
       autoPlay: false
     }
@@ -47,7 +54,7 @@ export class VideoPlayerComponent implements OnInit {
       //check if the state of the current video is ended.
       if (state === "ENDED") {
         console.log("the video player is ended")
-        this.playNextVideo(videoUrl);
+        // this.playNextVideo(videoUrl);
       }
     });
 
@@ -66,7 +73,10 @@ export class VideoPlayerComponent implements OnInit {
   playVideo(id) {
     this.videoList.forEach(video => {
       if (video.id === id) {
-        this.videoPlayer(video.videoUrl);
+        this.videoUrl = video.videoUrl;
+        this.router.navigate(['/watch', id]);
+        this.videoPlayer();
+        
       }
     })
 
@@ -87,7 +97,7 @@ export class VideoPlayerComponent implements OnInit {
       console.log("index of the next video is :" + index + 1);
       nextVideoIndex = 0;
     }
-    this.videoPlayer(this.videoList[nextVideoIndex].videoUrl);
+    // this.videoPlayer(this.videoList[nextVideoIndex].videoUrl);
   }
 
   // request for videos from the backend
@@ -95,7 +105,7 @@ export class VideoPlayerComponent implements OnInit {
     this.videoPlayerService.getVideoList().subscribe(
       res => {
         this.videoList = res.json();
-        this.videoPlayer(this.videoList[0].videoUrl);
+        // this.videoPlayer(this.videoList[0].videoUrl);
       },
       err => {
         console.log(err);
@@ -104,7 +114,20 @@ export class VideoPlayerComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.videoPlayer();
+    this.route.params.forEach((params: Params) => {
+      const val = 'id';
+      this.videoId = Number.parseInt(params[val], 10);
+    });
+    this.videoPlayerService.getVideo(this.videoId).subscribe(
+      res => {
+        this.video = res.json();
+        this.videoUrl = this.video.videoUrl;
+        this.videoPlayer();
+      },
+      err => {
+        console.log(err);
+      }
+    );
     this.getVideoList();
 
   }

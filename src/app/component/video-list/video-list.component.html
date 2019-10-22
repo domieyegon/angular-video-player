@@ -1,0 +1,12 @@
+<div class="row">
+    <div (click)="playVideo(videoItem)" class="col-md-2" *ngFor="let videoItem of videoList">
+        <div class="card mb-3">
+            <div class="card-body">
+                <img class="card-img-top" src="{{videoItem.imageUrl}}">
+                <hr>
+                <span>4:00</span>
+                <p>{{videoItem.videoOriginalName}}</p>
+            </div>
+        </div>
+    </div>
+</div>

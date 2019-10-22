@@ -10,12 +10,16 @@ import { VideoPlayerComponent } from './component/video-player/video-player.comp
 
 import { routing } from './app.routing';
 import { UploadVideoComponent } from './component/upload-video/upload-video.component';
+import { NavBarComponent } from './component/nav-bar/nav-bar.component';
+import { VideoListComponent } from './component/video-list/video-list.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     VideoPlayerComponent,
-    UploadVideoComponent
+    UploadVideoComponent,
+    NavBarComponent,
+    VideoListComponent
   ],
   imports: [
     HttpModule,

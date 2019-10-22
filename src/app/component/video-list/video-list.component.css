@@ -1,0 +1,8 @@
+.card:hover {
+    -ms-transform: scale(0.9);
+    /* IE 9 */
+    -webkit-transform: scale(0.9);
+    /* Safari */
+    transform: scale(0.9);
+    cursor: pointer;
+}

@@ -17,4 +17,14 @@ export class VideoPlayerService {
 
    return this.http.get(url, {headers:headers});
   }
+
+  getVideo(id: number) {
+
+    const url = 'http://localhost:8181/api/video/' + id;
+    const headers = new Headers ({
+      'Content-Type': 'application/json'
+    });
+
+    return this.http.get(url, {headers});
+  }
 }
