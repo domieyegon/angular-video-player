@@ -16,8 +16,8 @@ export class VideoListComponent implements OnInit {
 
   constructor(
     private videoPlayerService: VideoPlayerService,
-    private router:Router
-    ) { }
+    private router: Router
+  ) { }
 
   playVideo(video: Video) {
     this.selectedVideo = video;
@@ -28,12 +28,6 @@ export class VideoListComponent implements OnInit {
     this.videoPlayerService.getVideoList().subscribe(
       res => {
         this.videoList = res.json();
-        this.videoList.forEach(video => {
-          if (video.duration !== undefined ){
-          this.videoDuration = new Date((Number(video.duration)) * 1000).toISOString().substr(11, 8);
-          console.log(this.videoDuration);
-        }
-        })
       },
       err => {
         console.log(err);

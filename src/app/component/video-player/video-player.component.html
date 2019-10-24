@@ -45,10 +45,10 @@
                             <td>
                                 <div class="img-container">
                                     <img class="video-img" src="{{video.imageUrl}}">
-                                    <small class="duration">4:00</small>
+                                    <small class="duration">{{video.duration * 1000 | date: 'mm:ss' : 'UTC'}}</small>
                                 </div>
                             </td>
-                            <td>{{video.videoOriginalName}}</td>
+                            <td>{{((video.videoOriginalName).length>50) ? (video.videoOriginalName | slice:0:60)+'..':(video.videoOriginalName)}}</td>
                         </tr>
                     </tbody>
                 </table>

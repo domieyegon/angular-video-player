@@ -41,9 +41,9 @@ div#video-controls {
     position: absolute;
     display: flex;
     justify-content: space-around;
-    bottom: 0;
-    left: 1%;
-    right: -1%;
+    bottom: 6px;
+    left: 0;
+    right: 0;
     padding: 1.5rem;
     max-width: 100%;
     width: 100%;
@@ -56,7 +56,8 @@ div#video-controls {
 }
 
 #video-container:hover div#video-controls {
-    opacity: 1;
+    opacity: 0.5;
+    background-color: rgb(7, 7, 7);
 }
 
 video {

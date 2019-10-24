@@ -32,7 +32,7 @@ var videoControls = function() {
 
     // Event listener for settings button 
     settingsButton.addEventListener("click", function() {
-        $('#video-settings').show();
+        $('#video-settings').toggle();
     });
 
     // video element on click events
