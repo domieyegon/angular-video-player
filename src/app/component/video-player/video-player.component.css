@@ -43,7 +43,7 @@ div#video-controls {
     justify-content: space-around;
     bottom: 0;
     left: 1%;
-    right: 0;
+    right: -1%;
     padding: 1.5rem;
     max-width: 100%;
     width: 100%;
@@ -56,13 +56,14 @@ div#video-controls {
 }
 
 #video-container:hover div#video-controls {
-    opacity: .9;
+    opacity: 1;
 }
 
 video {
     object-fit: fill;
     max-width: 100%;
     width: 100%;
+    background-color: rgb(22, 21, 21);
 }
 
 input[type=range] {
@@ -191,4 +192,24 @@ div#video-settings {
 
 #qualities:hover {
     color: #cccccc;
+}
+
+.video-img {
+    width: 100px;
+    height: 70px;
+}
+
+.img-container {
+    position: relative;
+}
+
+.duration {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    color: aliceblue;
+    background-color: rgb(32, 32, 32);
+    padding-left: 5px;
+    padding-right: 5px;
+    opacity: .7;
 }

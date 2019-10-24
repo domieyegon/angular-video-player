@@ -12,6 +12,7 @@ export class VideoListComponent implements OnInit {
 
   public selectedVideo: Video;
   public videoList: Video[];
+  private videoDuration;
 
   constructor(
     private videoPlayerService: VideoPlayerService,
@@ -27,6 +28,12 @@ export class VideoListComponent implements OnInit {
     this.videoPlayerService.getVideoList().subscribe(
       res => {
         this.videoList = res.json();
+        this.videoList.forEach(video => {
+          if (video.duration !== undefined ){
+          this.videoDuration = new Date((Number(video.duration)) * 1000).toISOString().substr(11, 8);
+          console.log(this.videoDuration);
+        }
+        })
       },
       err => {
         console.log(err);

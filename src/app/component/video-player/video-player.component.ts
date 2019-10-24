@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 
 import RxPlayer from 'rx-player';
 import { VideoPlayerService } from 'src/app/service/video-player.service';
 import { Video } from 'src/app/model/video';
 import { Params, ActivatedRoute, Router } from '@angular/router';
+
+
+declare var videoControls: any;
 
 @Component({
   selector: 'app-video-player',
@@ -17,8 +20,10 @@ export class VideoPlayerComponent implements OnInit {
   public videoQualities = [];
   private player;
   private videoId: number;
-  private videoUrl
+  private videoUrl;
+  private videoName;
 
+ 
 
   constructor(
     private videoPlayerService: VideoPlayerService,
@@ -73,10 +78,10 @@ export class VideoPlayerComponent implements OnInit {
   playVideo(id) {
     this.videoList.forEach(video => {
       if (video.id === id) {
-        this.videoUrl = video.videoUrl;
+        this.videoUrl = video.videoUrl;         
         this.router.navigate(['/watch', id]);
         this.videoPlayer();
-        
+        this.videoName = video.videoOriginalName;
       }
     })
 
@@ -114,6 +119,7 @@ export class VideoPlayerComponent implements OnInit {
   }
 
   ngOnInit() {
+    videoControls();
     this.route.params.forEach((params: Params) => {
       const val = 'id';
       this.videoId = Number.parseInt(params[val], 10);
@@ -122,6 +128,7 @@ export class VideoPlayerComponent implements OnInit {
       res => {
         this.video = res.json();
         this.videoUrl = this.video.videoUrl;
+        this.videoName = this.video.videoOriginalName;
         this.videoPlayer();
       },
       err => {

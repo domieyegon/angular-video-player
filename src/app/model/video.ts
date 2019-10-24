@@ -8,5 +8,6 @@ export class Video {
     public videoUrl: string;
     public videoType: string;
     public videoSize: number;
+    public duration : string;
 
 }

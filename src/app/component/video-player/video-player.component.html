@@ -28,7 +28,7 @@
                 </table>
             </div>
         </div>
-        <p>some text</p>
+        <p>{{videoName}}</p>
     </div>
     <!-- <div class="col-md-8">
         <video class="video-player" controls width="100%"></video>
@@ -42,6 +42,12 @@
                 <table class="table">
                     <tbody>
                         <tr (click)="playVideo(video.id)" class="playlist-item" *ngFor="let video of videoList">
+                            <td>
+                                <div class="img-container">
+                                    <img class="video-img" src="{{video.imageUrl}}">
+                                    <small class="duration">4:00</small>
+                                </div>
+                            </td>
                             <td>{{video.videoOriginalName}}</td>
                         </tr>
                     </tbody>

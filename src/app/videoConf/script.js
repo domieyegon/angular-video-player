@@ -1,5 +1,5 @@
-window.onload = function() {
-
+// window.onload = function() {
+var videoControls = function() {
     // Video
     var video = document.getElementById("video");
 
