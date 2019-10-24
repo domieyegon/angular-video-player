@@ -19,10 +19,10 @@
 
             <!-- Settings -->
             <div id="video-settings">
-                <table>
+                <table class="w-100">
                     <tbody>
-                        <tr (click)="selectQuality(quality)" id="qualities" *ngFor="let quality of videoQualities">
-                            <td>{{quality}}</td>
+                        <tr (click)="selectQuality(videoBitrates)" id="qualities" *ngFor="let quality of videoQualities">
+                            <td class="text-center">{{quality.width}}<span>p</span></td>
                         </tr>
                     </tbody>
                 </table>
@@ -30,9 +30,7 @@
         </div>
         <p>{{videoName}}</p>
     </div>
-    <!-- <div class="col-md-8">
-        <video class="video-player" controls width="100%"></video>
-    </div> -->
+
     <div class="col-md-4">
         <div class="card">
             <div class="card-header">

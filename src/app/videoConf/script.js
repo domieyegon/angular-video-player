@@ -9,6 +9,7 @@ var videoControls = function() {
     var settingsButton = document.getElementById("settings-btn");
     var volumebar = document.getElementById("volume-bar");
     var muteUnmuteBtn = document.getElementById("mute-unmute");
+    var videoContainer = document.getElementById("video-container");
 
     // Sliders
     var seekBar = document.getElementById("seek-bar");
@@ -55,7 +56,12 @@ var videoControls = function() {
 
     // video element mouseout event
     video.addEventListener("mouseleave", function() {
-        // $('#video-controls').hide();
+        $('#video-settings').hide();
+    })
+
+    // video element mouseout event
+    videoContainer.addEventListener("mouseleave", function() {
+        $('#video-settings').hide();
     })
 
     // Event listener to the volumebar

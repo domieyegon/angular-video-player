@@ -1,3 +1,7 @@
+.card {
+    height: 270px;
+}
+
 .card:hover {
     -ms-transform: scale(0.9);
     /* IE 9 */

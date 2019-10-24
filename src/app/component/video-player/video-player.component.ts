@@ -17,7 +17,9 @@ export class VideoPlayerComponent implements OnInit {
 
   public videoList: Video[];
   public video: Video = new Video();
-  public videoQualities = [];
+  public videoQualities;
+  private videoBitrates;
+  public videoTrack;
   private player;
   private videoId: number;
   private videoUrl;
@@ -47,7 +49,14 @@ export class VideoPlayerComponent implements OnInit {
     // check if the video loaded successfully
     this.player.addEventListener("playerStateChange", (state) => {
 
-      this.videoQualities = this.player.getAvailableVideoBitrates();
+      this.videoBitrates = this.player.getAvailableVideoBitrates();
+      this.videoTrack = this.player.getVideoTrack();
+      this.videoQualities = this.videoTrack.representations;
+      console.log(this.videoQualities);
+      // this.videoQualities.forEach(quality => {
+      //   console.log(quality);
+      // })
+     
 
       // get the duration and convert the HH:MM:SS
       const pos = this.player.getPosition();
@@ -71,7 +80,9 @@ export class VideoPlayerComponent implements OnInit {
   }
 
   selectQuality(quality) {
-    this.player.setVideoBitrate(quality)
+
+    console.log(quality);
+    // this.player.setVideoBitrate(quality)
   }
 
   // play a video from the playlist on click
