@@ -11,15 +11,16 @@ declare var videoControls: any;
 @Component({
   selector: 'app-video-player',
   templateUrl: './video-player.component.html',
-  styleUrls: ['./video-player.component.css']
+  styleUrls: ['./video-player.component.css'],
+  providers: [VideoPlayerService]
 })
 export class VideoPlayerComponent implements OnInit {
 
-  public videoList: Video[];
-  public video: Video = new Video();
-  public videoQualities;
+  private videoList: Video[];
+  private video: Video = new Video();
+  private videoQualities;
   private videoBitrates;
-  public videoTrack;
+  private videoTrack;
   private player;
   private videoId: number;
   private videoUrl;
@@ -50,21 +51,9 @@ export class VideoPlayerComponent implements OnInit {
     this.player.addEventListener("playerStateChange", (state) => {
 
       this.videoBitrates = this.player.getAvailableVideoBitrates();
-      this.videoTrack = this.player.getVideoTrack();
-      this.videoQualities = this.videoTrack.representations;
-      console.log(this.videoQualities);
-      // this.videoQualities.forEach(quality => {
-      //   console.log(quality);
-      // })
-     
-
-      // get the duration and convert the HH:MM:SS
-      const pos = this.player.getPosition();
-      const dur = this.player.getVideoDuration();
-      console.log(new Date(pos * 1000).toISOString().substr(11, 8));
-      console.log(new Date(dur * 1000).toISOString().substr(11, 8));
-      console.log(`current position: ${pos} / ${dur}`);
-
+      // this.videoTrack = this.player.getVideoTrack();
+      // this.videoQualities = this.videoTrack.representations;
+   
       //check if the state of the current video is ended.
       if (state === "ENDED") {
         console.log("the video player is ended")
@@ -81,8 +70,7 @@ export class VideoPlayerComponent implements OnInit {
 
   selectQuality(quality) {
 
-    console.log(quality);
-    // this.player.setVideoBitrate(quality)
+    this.player.setVideoBitrate(quality)
   }
 
   // play a video from the playlist on click
@@ -90,7 +78,8 @@ export class VideoPlayerComponent implements OnInit {
     this.videoList.forEach(video => {
       if (video.id === id) {
         this.videoUrl = video.videoUrl;         
-        this.router.navigate(['/watch', id]);
+        // this.router.navigate(['/watch', id]);
+         window.location.href ='/watch/'+id
         this.videoPlayer();
         this.videoName = video.videoOriginalName;
       }
@@ -104,13 +93,9 @@ export class VideoPlayerComponent implements OnInit {
   playNextVideo(url) {
     let index = this.videoList.findIndex(vid => vid.videoUrl === url);
     let nextVideoIndex = 0;
-    console.log("index of the current video :" + index);
-    console.log("length of the array :" + this.videoList.length);
     if ((index + 1) >= this.videoList.length) {
       nextVideoIndex = 0
-      console.log("index of the current video :" + 0)
     } else {
-      console.log("index of the next video is :" + index + 1);
       nextVideoIndex = 0;
     }
     // this.videoPlayer(this.videoList[nextVideoIndex].videoUrl);

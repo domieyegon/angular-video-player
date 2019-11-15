@@ -7,6 +7,11 @@
     color: white;
 }
 
+.card {
+    background-color: #D3D3D3;
+    border: none;
+}
+
 
 /* player */
 
@@ -44,18 +49,32 @@ button:hover {
     transform: scale(1.2);
 }
 
+.duration-display {
+    color: rgba(255, 255, 255, 1);
+}
+
+.control-btn {
+    display: flex;
+}
+
+.right-btn {
+    width: 100%;
+}
+
 div#video-controls {
     position: absolute;
-    display: flex;
+    /* display: flex; */
+    height: 55px;
     justify-content: space-around;
     bottom: 6px;
     left: 0;
     right: 0;
-    padding: 1.5rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
     max-width: 100%;
     width: 100%;
     opacity: 0;
-    /* background: rgba(0, 0, 0, .1); */
+    background: rgba(0, 0, 0, .2);
     -webkit-transition: opacity .3s;
     -moz-transition: opacity .3s;
     -o-transition: opacity .3s;
@@ -114,7 +133,6 @@ input[type=range]::-webkit-slider-thumb:hover {
 
 input[type=range]:focus::-webkit-slider-runnable-track {
     background: rgba(255, 255, 255, 1);
-    ;
 }
 
 input[type=range]::-moz-range-track {

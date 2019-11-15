@@ -117,16 +117,40 @@ var videoControls = function() {
     video.addEventListener("timeupdate", function() {
         // Calculate the slider value
         var value = (100 / video.duration) * video.currentTime;
-
         // Update the slider value
         seekBar.value = value;
+        // get duration
+        onTrackedVideoFrame(this.currentTime, this.duration);
     });
 
     // Pause the video when the seek handle is being dragged
     seekBar.addEventListener("mousedown", function() {
         video.play();
     });
+    // track the duration of a video
+    function onTrackedVideoFrame(currentTime, duration) {
+        $("#current").text(format(currentTime)); //Change #current to currentTime
+        $("#duration").text(format(duration))
+    }
+
+    // time formater
+    function format(time) {
+        // Hours, minutes and seconds
+        var hrs = ~~(time / 3600);
+        var mins = ~~((time % 3600) / 60);
+        var secs = ~~time % 60;
+
+        // Output like "1:01" or "4:03:59" or "123:03:59"
+        var ret = "";
+        if (hrs > 0) {
+            ret += "" + hrs + ":" + (mins < 10 ? "0" : "");
+        }
+        ret += "" + mins + ":" + (secs < 10 ? "0" : "");
+        ret += "" + secs;
+        return ret;
+    }
+
     $('#video-controls').width($('video').width());
-    $('#seek-bar').width($('video').width() - 105);
+    // $('#seek-bar').width($('video').width() - 105);
     $('#video-settings').hide();
 }
