@@ -46,7 +46,7 @@
             <div class="card-body">
                 <table class="table">
                     <tbody>
-                        <tr (click)="playVideo(video.id)" class="playlist-item" *ngFor="let video of videoList">
+                        <tr (click)="playVideo(video)" class="playlist-item" *ngFor="let video of videoList">
                             <td>
                                 <div class="img-container">
                                     <img class="video-img" src="{{video.imageUrl}}">

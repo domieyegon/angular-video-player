@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, SimpleChanges, ElementRef } from '@angular/core';
 
 import RxPlayer from 'rx-player';
 import { VideoPlayerService } from 'src/app/service/video-player.service';
@@ -11,8 +11,7 @@ declare var videoControls: any;
 @Component({
   selector: 'app-video-player',
   templateUrl: './video-player.component.html',
-  styleUrls: ['./video-player.component.css'],
-  providers: [VideoPlayerService]
+  styleUrls: ['./video-player.component.css']
 })
 export class VideoPlayerComponent implements OnInit {
 
@@ -29,6 +28,7 @@ export class VideoPlayerComponent implements OnInit {
  
 
   constructor(
+    private elRef: ElementRef,
     private videoPlayerService: VideoPlayerService,
     private route: ActivatedRoute,
     private router: Router
@@ -40,7 +40,7 @@ export class VideoPlayerComponent implements OnInit {
     this.player = new RxPlayer({ videoElement });
 
     const getVideoToPlay = {
-      url: this.videoUrl,
+      url: this.videoUrl,//"https://bitmovin-a.akamaihd.net/content/playhouse-vr/mpds/105560.mpd" "../../../assets/out/sample.mpd",
       transport: "dash", //Transport protocol can be "dash","smooth" or "directfile" 
       autoPlay: false
     }
@@ -51,8 +51,6 @@ export class VideoPlayerComponent implements OnInit {
     this.player.addEventListener("playerStateChange", (state) => {
 
       this.videoBitrates = this.player.getAvailableVideoBitrates();
-      // this.videoTrack = this.player.getVideoTrack();
-      // this.videoQualities = this.videoTrack.representations;
    
       //check if the state of the current video is ended.
       if (state === "ENDED") {
@@ -74,17 +72,14 @@ export class VideoPlayerComponent implements OnInit {
   }
 
   // play a video from the playlist on click
-  playVideo(id) {
-    this.videoList.forEach(video => {
-      if (video.id === id) {
-        this.videoUrl = video.videoUrl;         
-        // this.router.navigate(['/watch', id]);
-         window.location.href ='/watch/'+id
-        this.videoPlayer();
-        this.videoName = video.videoOriginalName;
-      }
+  playVideo(video) {
+    this.router.navigate(['/watch', video.id]);
+    this.player.loadVideo({
+      url: video.videoUrl,
+      transport: "dash",
+      autoPlay: false
     })
-
+    this.videoName = video.videoOriginalName;
   }
 
 
