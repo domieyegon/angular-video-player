@@ -28,7 +28,6 @@ export class VideoPlayerComponent implements OnInit {
  
 
   constructor(
-    private elRef: ElementRef,
     private videoPlayerService: VideoPlayerService,
     private route: ActivatedRoute,
     private router: Router
@@ -67,7 +66,6 @@ export class VideoPlayerComponent implements OnInit {
   }
 
   selectQuality(quality) {
-
     this.player.setVideoBitrate(quality)
   }
 
@@ -101,7 +99,6 @@ export class VideoPlayerComponent implements OnInit {
     this.videoPlayerService.getVideoList().subscribe(
       res => {
         this.videoList = res.json();
-        // this.videoPlayer(this.videoList[0].videoUrl);
       },
       err => {
         console.log(err);
