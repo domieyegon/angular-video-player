@@ -15,19 +15,19 @@ declare var videoControls: any;
 })
 export class VideoPlayerComponent implements OnInit {
 
-  private videoList: Video[];
+  public videoList: Video[];
   private video: Video = new Video();
   private videoQualities;
-  private videoBitrates;
+  public videoBitrates;
   private videoTrack;
   private player;
   private videoId: number;
   private videoUrl;
   private videoName;
 
- 
 
-  constructor(
+
+  constructor (
     private videoPlayerService: VideoPlayerService,
     private route: ActivatedRoute,
     private router: Router
@@ -39,34 +39,34 @@ export class VideoPlayerComponent implements OnInit {
     this.player = new RxPlayer({ videoElement });
 
     const getVideoToPlay = {
-      url: this.videoUrl,//"https://bitmovin-a.akamaihd.net/content/playhouse-vr/mpds/105560.mpd" "../../../assets/out/sample.mpd",
-      transport: "dash", //Transport protocol can be "dash","smooth" or "directfile" 
+      url: this.videoUrl,
+      transport: 'dash', // Transport protocol can be "dash","smooth" or "directfile"
       autoPlay: false
-    }
+    };
     // play the video file
     this.player.loadVideo(getVideoToPlay);
 
     // check if the video loaded successfully
-    this.player.addEventListener("playerStateChange", (state) => {
+    this.player.addEventListener('playerStateChange', (state) => {
 
       this.videoBitrates = this.player.getAvailableVideoBitrates();
-   
-      //check if the state of the current video is ended.
-      if (state === "ENDED") {
-        console.log("the video player is ended")
-        // this.playNextVideo(videoUrl);
+
+      // check if the state of the current video is ended.
+      if (state === 'ENDED') {
+        console.log('Video ended loading the next');
+        this.playNextVideo(this.videoUrl);
       }
     });
 
     // check if error occured while loading the video file
-    this.player.addEventListener("error", (err) => {
-      console.log("the content stopped with the following error", err);
+    this.player.addEventListener('error', (err) => {
+      console.log('the content stopped with the following error', err);
     });
 
   }
 
   selectQuality(quality) {
-    this.player.setVideoBitrate(quality)
+    this.player.setVideoBitrate(quality);
   }
 
   // play a video from the playlist on click
@@ -74,24 +74,32 @@ export class VideoPlayerComponent implements OnInit {
     this.router.navigate(['/watch', video.id]);
     this.player.loadVideo({
       url: video.videoUrl,
-      transport: "dash",
+      transport: 'dash',
       autoPlay: false
-    })
+    });
     this.videoName = video.videoOriginalName;
+    this.videoUrl = video.videoUrl;
+    this.playNextVideo(this.videoUrl);
   }
 
 
 
   // play the next video when the current end
   playNextVideo(url) {
-    let index = this.videoList.findIndex(vid => vid.videoUrl === url);
+    const index = this.videoList.findIndex(vid => vid.videoUrl === url);
     let nextVideoIndex = 0;
     if ((index + 1) >= this.videoList.length) {
-      nextVideoIndex = 0
-    } else {
       nextVideoIndex = 0;
+    } else {
+      nextVideoIndex = index + 1;
     }
-    // this.videoPlayer(this.videoList[nextVideoIndex].videoUrl);
+    this.router.navigate(['/watch', this.videoList[nextVideoIndex].id]);
+    this.videoUrl = this.videoList[nextVideoIndex].videoUrl;
+    this.player.loadVideo({
+      url: this.videoUrl,
+      transport: 'dash',
+      autoPlay: false
+    });
   }
 
   // request for videos from the backend
