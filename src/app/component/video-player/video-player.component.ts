@@ -79,7 +79,6 @@ export class VideoPlayerComponent implements OnInit {
     });
     this.videoName = video.videoOriginalName;
     this.videoUrl = video.videoUrl;
-    this.playNextVideo(this.videoUrl);
   }
 
 
@@ -95,6 +94,7 @@ export class VideoPlayerComponent implements OnInit {
     }
     this.router.navigate(['/watch', this.videoList[nextVideoIndex].id]);
     this.videoUrl = this.videoList[nextVideoIndex].videoUrl;
+    this.videoName = this.videoList[nextVideoIndex].videoOriginalName;
     this.player.loadVideo({
       url: this.videoUrl,
       transport: 'dash',

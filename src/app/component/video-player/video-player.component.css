@@ -1,9 +1,18 @@
+.row {
+    overflow-x: hidden;
+}
+@media screen and (min-width: 768px) {
+    .video-player {
+        /* height: 450px; */
+    }
+}
+
 .playlist-item {
     cursor: pointer;
 }
 
 .playlist-item:hover {
-    background-color: #00BFFF;
+    background-color: rgba(101,158,199, 0.3);
     color: white;
 }
 
@@ -105,7 +114,7 @@ input[type=range] {
 }
 
 input[type=range]::-webkit-slider-runnable-track {
-    height: 2px;
+    height: 3px;
     background: rgba(255, 255, 255, 1);
     border: none;
 }
@@ -234,3 +243,27 @@ div#video-settings {
     padding-right: 5px;
     opacity: .7;
 }
+
+.center-play {
+    transition: .5s ease;
+    opacity: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.playlist-item:hover .video-img {
+    opacity: 0.3;
+  }
+  
+  .playlist-item:hover .center-play {
+    opacity: 1;
+  }
+
+  .play-icon {
+      font-size: 40px;
+      color: #ffffff;
+  }
