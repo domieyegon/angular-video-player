@@ -1,24 +1,30 @@
-.card {
-    height: 270px;
+.video-list {
+    padding: 0 5px !important;
+    -ms-flex: 0 0 20%;
+    flex: 0 0 20%;
+    max-width: 20%;
+}
+
+.video-item {
+    padding: 0 !important;
 }
 
 .card:hover {
-    -ms-transform: scale(0.9);
+    /* -ms-transform: scale(0.9); */
     /* IE 9 */
-    -webkit-transform: scale(0.9);
+    /* -webkit-transform: scale(0.9); */
     /* Safari */
-    transform: scale(0.9);
+    /* transform: scale(0.9); */
     cursor: pointer;
-}
-
-.card-img-top {
-    height: 150px;
 }
 
 .img-container {
     position: relative;
 }
 
+.video-details {
+    padding: 10px;
+}
 .duration {
     position: absolute;
     bottom: 8px;
