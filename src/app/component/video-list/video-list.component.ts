@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { VideoPlayerService } from 'src/app/service/video-player.service';
 import { Video } from 'src/app/model/video';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-video-list',
@@ -14,7 +15,8 @@ export class VideoListComponent implements OnInit {
   public videoList: Video[];
   private videoDuration;
 
-  constructor(
+  constructor (
+    private titleService: Title,
     private videoPlayerService: VideoPlayerService,
     private router: Router
   ) { }
@@ -36,6 +38,7 @@ export class VideoListComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.titleService.setTitle("RVP");
     this.getVideoList();
   }
 
