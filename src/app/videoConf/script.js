@@ -10,6 +10,7 @@ var videoControls = function () {
   var volumebar = document.getElementById("volume-bar");
   var muteUnmuteBtn = document.getElementById("mute-unmute");
   var videoContainer = document.getElementById("video-container");
+  var bigCenterButton = document.getElementById("big-center-button");
 
   // Sliders
   var seekBar = document.getElementById("seek-bar");
@@ -20,11 +21,12 @@ var videoControls = function () {
     if (video.paused == true) {
       // Play the video
       video.play();
-
+      $('#big-center-button').hide();
       playButton.innerHTML = '<i class="fa fa-pause" aria-hidden="true">';
     } else {
       // Pause the video
       video.pause();
+      $('#big-center-button').show();
       // Update the button text to 'Play'
       playButton.innerHTML = '<i class="fa fa-play" aria-hidden="true">';
     }
@@ -39,9 +41,11 @@ var videoControls = function () {
   video.addEventListener("click", function () {
     if (video.paused === true) {
       video.play();
+      $('#big-center-button').hide();
       playButton.innerHTML = '<i class="fa fa-pause" aria-hidden="true">';
     } else {
       video.pause();
+      $('#big-center-button').show();
       playButton.innerHTML = '<i class="fa fa-play" aria-hidden="true">';
     }
     $("#video-settings").hide();
@@ -55,6 +59,13 @@ var videoControls = function () {
   // video element mouseout event
   video.addEventListener("mouseleave", function () {
     $("#video-settings").hide();
+  });
+
+
+  bigCenterButton.addEventListener("click", function () {
+    video.play();
+    $('#big-center-button').hide();
+    playButton.innerHTML = '<i class="fa fa-pause" aria-hidden="true">';
   });
 
   // video element mouseout event
@@ -150,4 +161,5 @@ var videoControls = function () {
   $("#video-controls").width($("video").width());
   // $('#seek-bar').width($('video').width() - 105);
   $("#video-settings").hide();
+  $('#big-center-button').hide();
 };

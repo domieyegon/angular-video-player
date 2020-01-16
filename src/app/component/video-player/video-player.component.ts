@@ -4,6 +4,7 @@ import RxPlayer from 'rx-player';
 import { VideoPlayerService } from 'src/app/service/video-player.service';
 import { Video } from 'src/app/model/video';
 import { Params, ActivatedRoute, Router } from '@angular/router';
+import { Title } from '@angular/platform-browser';
 
 
 declare var videoControls: any;
@@ -28,6 +29,7 @@ export class VideoPlayerComponent implements OnInit {
 
 
   constructor (
+    private titleService: Title,
     private videoPlayerService: VideoPlayerService,
     private route: ActivatedRoute,
     private router: Router
@@ -78,6 +80,7 @@ export class VideoPlayerComponent implements OnInit {
       autoPlay: false
     });
     this.videoName = video.videoOriginalName;
+    this.titleService.setTitle(video.videoOriginalName);
     this.videoUrl = video.videoUrl;
   }
 
@@ -95,6 +98,7 @@ export class VideoPlayerComponent implements OnInit {
     this.router.navigate(['/watch', this.videoList[nextVideoIndex].id]);
     this.videoUrl = this.videoList[nextVideoIndex].videoUrl;
     this.videoName = this.videoList[nextVideoIndex].videoOriginalName;
+    this.titleService.setTitle(this.videoList[nextVideoIndex].videoOriginalName);
     this.player.loadVideo({
       url: this.videoUrl,
       transport: 'dash',
@@ -125,6 +129,7 @@ export class VideoPlayerComponent implements OnInit {
         this.video = res.json();
         this.videoUrl = this.video.videoUrl;
         this.videoName = this.video.videoOriginalName;
+        this.titleService.setTitle(this.video.videoOriginalName);
         this.videoPlayer();
       },
       err => {
