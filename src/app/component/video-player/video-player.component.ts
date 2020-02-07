@@ -18,13 +18,13 @@ export class VideoPlayerComponent implements OnInit {
 
   public videoList: Video[];
   private video: Video = new Video();
-  private videoQualities;
+  public videoQualities;
   public videoBitrates;
-  private videoTrack;
+  public videoTrack;
   private player;
   private videoId: number;
   private videoUrl;
-  private videoName;
+  public videoName;
 
 
 
@@ -82,6 +82,7 @@ export class VideoPlayerComponent implements OnInit {
     this.videoName = video.videoOriginalName;
     this.titleService.setTitle(video.videoOriginalName);
     this.videoUrl = video.videoUrl;
+    window.scrollTo(0, 0);
   }
 
 
