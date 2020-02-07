@@ -282,3 +282,7 @@ div#video-settings {
     font-size: 80px;
     color: #ffffff;
   }
+/* 
+video::-webkit-media-controls-enclosure {
+  display:none !important;
+} */
