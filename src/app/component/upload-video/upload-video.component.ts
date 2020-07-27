@@ -37,7 +37,7 @@ export class UploadVideoComponent implements OnInit {
           this.progress.percentage = Math.round(100 * res.loaded / res.total);
           console.log(this.progress.percentage);
         } else if (res instanceof HttpResponse) {
-          console.log('File is completely uploaded!');
+          console.log('Upload complete!');
         }
       }
     );
